@@ -1,0 +1,27 @@
+.video-container {
+  width: 100%;
+  position: fixed;
+}
+
+video, canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+mat-card {
+  margin: 20px;
+}
+
+mat-card-content {
+  padding: 10px;
+}
+
+.mat-raised-button {
+  width: 100%;
+  font-size: 30px;
+  padding: 5%;
+}
+
+.row {
+  margin-bottom: 10px;
+}

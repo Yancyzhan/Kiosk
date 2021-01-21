@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand text-dark" href="/"><h3><i class="fas fa-grin-squint-tears"></i>&nbsp;Biometric Admin</h3></a>
+    <div class="mr-auto">
+        <ul class="nav bg-light h-100">
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/config/configAddEdit"><i class="fas fa-file-alt"></i>&nbsp;User Config</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/notifications/notificationView"><i class="fas fa-comments"></i>&nbsp;Notification</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link text-dark" href="/records/"><i class="fas fa-book"></i>&nbsp;Records</a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav-item dropdown">
+        <a class="nav-link text-dark" href="#" id="message" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i id="message-icon" class="fas fa-bell" hidden></i><span id="messageAlert" class="badge badge-danger badge-counter"><i class="fas fa-exclamation"></i></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="message">
+        <div id="messageDropdown">
+        </div>          
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item bg-light text-dark" href="/notifications/notificationView/">Load All</a>
+        </div>
+    </div>
+    <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user-circle"></i>
+        <span>{{ user.username }}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item bg-light text-dark" href="/accounts/password_change">Change Password</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item bg-light text-dark" href="/accounts/logout">Log Out</a>
+        </div>
+    </div>
+</nav>

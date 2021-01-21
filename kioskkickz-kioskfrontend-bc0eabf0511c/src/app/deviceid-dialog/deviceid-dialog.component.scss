@@ -1,0 +1,14 @@
+.mat-raised-button {
+    width: 100%;
+    font-size: 50px;
+    padding: 5%;
+ }
+
+.result-dialog-header {
+  font-size: 40px;
+ }
+
+ ::ng-deep mat-keyboard-container {
+  max-width: 100% !important;
+  width: 100% !important;
+}

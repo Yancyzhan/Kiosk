@@ -1,0 +1,32 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <script>
+    recordComponentOptions = {
+      "isHome": true,
+      "searching": false,
+      "bLengthChange": false,
+      "paging": true,
+      "pagingType": "simple",
+      "ordering": false,
+      "pageLength": 5,
+      "columns": [
+          { "width": "30%" },
+          null,
+          {"visible": false}
+      ]
+    };
+  </script>
+  <div class="row">
+    <div class="col-12">
+      {% if user.is_superuser %}
+        <h1>Welcome! {{user.username}}</h1>
+      {% else %}
+        {% include 'recordComponent.html' %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

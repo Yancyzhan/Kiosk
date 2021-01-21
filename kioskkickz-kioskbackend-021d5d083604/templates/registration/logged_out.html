@@ -1,0 +1,23 @@
+<!-- templates/registration/login.html -->
+{% extends 'baseNoLogin.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="jumbotron h-100">
+  <div class="container">
+    <div class="row">
+      <div class="offset-4 col-4">
+        <div class="card">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+          <div class="card-body">
+            <p>You have logged out successfully. </p>
+            <a class="btn btn-lg btn-primary btn-block" href="/accounts/login">Log In</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

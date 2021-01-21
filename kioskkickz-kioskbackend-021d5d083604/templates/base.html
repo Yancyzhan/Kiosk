@@ -1,0 +1,103 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<style>
+  html, body, main {
+    margin: 0;
+    height: 100%;
+  }
+
+  .main-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+    margin-top: 3%;
+  }
+
+  nav {
+    height: 8%;
+  }
+
+  .h-90 {
+    height: 90% !important;
+  }
+
+
+</style>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Kiosk{% endblock %}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+  <style>
+    .nav-item .nav-link .badge-counter {
+      position: absolute;
+      transform: scale(.8);
+      transform-origin: top right;
+      right: .7rem;
+      margin-top: -.25rem;
+    }
+  </style>
+</head>
+<body>
+  {% if user.is_authenticated %}
+  <script>
+    function formatDate(date) {
+      var d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) 
+          month = '0' + month;
+      if (day.length < 2) 
+          day = '0' + day;
+
+      return [year, month, day].join('-');
+    }
+    
+    function getDateString(date) {
+      return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+    }
+  </script>
+  <main>
+    {% if user.is_superuser %}
+      {% include 'superadminNav.html' %}
+      <div class="row h-90 w-100">
+        <div class="col-12">
+          <div class="container main-panel" style="margin-top: 3%;">
+            
+    {% else %}
+      {% include 'adminNav.html' %}
+      <div class="row h-90 w-100">
+        <div class="col-3 bg-light">
+          {% include 'notificationComponent.html' %}
+        </div>
+        <div class="col-9">
+          <div class="container main-panel">
+    {% endif %}
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+
+    
+  </main>
+  {% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+  {% endif %}
+</body>
+</html>

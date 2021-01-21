@@ -1,0 +1,184 @@
+<script>
+    $(document).ready(function() {
+
+        console.log(recordComponentOptions.isHome);
+        if (!recordComponentOptions.isHome) {
+            $("#recordChart").hide();
+            $("#recordTable").attr("class", "col-12");
+        }
+
+        var today = new Date();
+
+        var start_date_string = getDateString(today);
+        var end_date_string = getDateString(today);
+
+        $("#start_date").val(formatDate(start_date_string));
+        $("#end_date").val(formatDate(end_date_string));
+
+        $("#filter").click(function() {
+            getRecords();
+        });
+        
+        getRecords();
+    });
+
+    function getRecords() {
+
+        var start_date_string = $("#start_date").val().split("-").join("/");
+        var end_date_string = $("#end_date").val().split("-").join("/");
+
+        $.ajax({
+            url: "/records/api/records/?start_date=" + start_date_string + "&end_date=" + end_date_string,
+        }).done(function( data ) {
+            console.log(data);
+            $("#recordComponent").dataTable().fnDestroy();
+            clearRecord();
+            
+            processTimeLabels = [];
+            processTimeData = [];
+            isAcceptedLabels = ['Not Accepted', 'Accepted'];
+            isAcceptedData = [0, 0];
+            isAcceptedBackgroundColor = ['rgb(99, 141, 255)', 'rgb(255, 88, 88)'];
+            data.forEach(record => {
+                prependRecord(record);
+                var createDate = new Date(record.created);
+                processTimeLabels.push(createDate.toLocaleTimeString());
+                processTimeData.push(record.processTime);
+                if (record.isAccepted) {
+                    isAcceptedData[1] += 1;
+                } else {
+                    isAcceptedData[0] += 1;
+                }
+                
+            });
+            
+            $('#recordComponent').dataTable(recordComponentOptions);
+            drawProcessTimeLineChart(processTimeLabels, processTimeData, start_date_string, end_date_string);
+            drawResultDoughnutChart(isAcceptedLabels, isAcceptedData, start_date_string, end_date_string, isAcceptedBackgroundColor);
+        });
+    }
+
+    function prependRecord(record) {
+
+        var timeString = new Date(record.created).toLocaleString();
+
+        var html = '<td>\
+                        <img src="' + record.imageUrl + '" class="w-100"/>\
+                    </td>\
+                    <td>' + timeString + '</td>\
+                    <td>' + record.result + '</td>';
+     
+        var tr = document.createElement('tr');
+        $(tr).addClass("")
+            .html(html)
+            .prependTo($("#recordComponentBody"));
+        
+    }
+
+    function clearRecord() {
+        $("#recordComponentBody").html('');
+    }
+
+    function drawProcessTimeLineChart(labels, data, start, end) {
+        var label = 'Processing Time from ' + start + ' to ' + end;
+        var ctxLine = document.getElementById('processTimeLineChart').getContext('2d');
+        var lineChart = new Chart(ctxLine, {
+            // The type of chart we want to create
+            type: 'line',
+    
+            // The data for our dataset
+            data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        backgroundColor: 'rgb(99, 206, 255)',
+                        borderColor: 'rgb(99, 150, 255)',
+                        data: data
+                    }]
+                },
+    
+            // Configuration options go here
+            options: {}
+        });
+    }
+
+    function drawResultDoughnutChart(labels, data, start, end, backgroundColor) {
+        var label = 'Accepted from ' + start + ' to ' + end;
+        var ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+        var chartData = {
+                        datasets: [{
+                            backgroundColor: backgroundColor,
+                            data: data
+                        }],
+
+                        // These labels appear in the legend and in the tooltips when hovering different arcs
+                        labels: labels
+                    };
+        var doughnutChart = new Chart(ctxDoughnut, {
+            type: 'doughnut',
+            data: chartData
+        });
+    }
+</script>
+
+<div class="row">
+    <div class="col-3">
+        <div class="form-group">
+            <label>From:</label>
+            <input id="start_date" type="date" class="form-control" data-date-format="yyyy/mm/dd" />
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label>To:</label>
+            <input id="end_date" type="date" class="form-control" data-date-format="yyyy/mm/dd" />
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <button type="button" class="form-control btn btn-primary" id="filter">Filter</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6" id="recordTable">
+        <div class="card">
+            <div class="card-header">
+                Records
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="recordComponent">
+                    <thead>
+                        <td>Image</td>
+                        <td>Time</td>
+                        <td>Result</td>
+                    </thead>
+                    <tbody id="recordComponentBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6" id="recordChart">
+        <div class="card">
+            <div class="card-header">
+                Process Time
+            </div>
+            <div class="card-body">
+                <canvas id="processTimeLineChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Accepted
+            </div>
+            <div class="card-body">
+                <canvas id="doughnutChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

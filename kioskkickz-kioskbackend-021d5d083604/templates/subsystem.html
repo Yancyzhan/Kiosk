@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}biosystem{% endblock %}
+
+{% block content %}
+<br/>
+<style>
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
+    .modal-content {
+        height: 80vh;
+    }
+</style>
+<div class="container">
+{% if user.is_superuser %}
+    {% if message %}
+    <div class="alert alert-info" role="alert">
+        {{message}}
+    </div>
+    {% endif %}
+    <h3>Biometric Systems</h3>
+    <div class="mt-4">
+        <a href="/subsystem/subsystemAddEdit/0/" class="btn btn-lg btn-success">Create New</a>
+        <a href="/subsystem/downloadTemplate/" target="_blank" class="btn btn-lg btn-success">Download Template</a>
+    </div>
+    <table class="table mt-4">
+        <tbody>
+        {% for subsystem in subsystems %}
+            <tr>
+                <td><a href="/subsystem/subsystemAddEdit/{{subsystem.id}}/">{{subsystem.name}}</a></td>
+                {% if subsystem.isStarted == False %}
+                <td>Stopped</td>
+                <td><a href="/subsystem/api/biometricsInit/{{subsystem.id}}/"
+                    class="btn btn-lg btn-primary">Start</a></td>
+                <td></td>
+                {% else %}
+                <td>Started</td>
+                <td><a href="/subsystem/api/biometricsInit/{{subsystem.id}}/"
+                    class="btn btn-lg btn-primary">Restart</a></td>
+                <td><a href="/subsystem/api/biometricsStop/{{subsystem.id}}/"
+                    class="btn btn-lg btn-secondary">Stop</a></td>
+                {% endif %}
+                <td>
+                    <button class="btn btn-lg btn-info"
+                    data-toggle="modal" data-target="#logModal{{subsystem.id}}">
+                    Log
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="logModal{{subsystem.id}}" tabindex="-1" role="dialog" aria-labelledby="logModal{{subsystem.id}}Label" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="logModal{{subsystem.id}}Label">{{subsystem.name}} Log</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                <iframe src="/subsystem/log/{{subsystem.id}}/"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>   
+                <td><a href="subsystem/subsystemDelete/{{subsystem.id}}/" class="btn btn-lg btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>Sorry, you are not a super admin and do not have permission to access this page. </p>
+{% endif %}
+</div>
+{% endblock %}

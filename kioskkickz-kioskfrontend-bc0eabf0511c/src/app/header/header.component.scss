@@ -1,0 +1,31 @@
+#app-toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  min-height: 10vh;
+}
+
+#title-zone {
+  align-items: center;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 35px;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
+#header-icon {
+  font-size: 80px;
+  height: 80px;
+  width: 80px;
+}
+
+.mat-toolbar-single-row {
+  height: auto;
+}

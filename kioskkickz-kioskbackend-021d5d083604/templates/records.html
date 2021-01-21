@@ -1,0 +1,27 @@
+<!-- templates/records.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	<script>
+		recordComponentOptions = {
+			"isHome": false,
+            "searching": false,
+            "bLengthChange": false,
+            "paging": true,
+            "ordering": false,
+            "pageLength": 10,
+            "columns": [
+                { "width": "20%" },
+                { "width": "20%" },
+                {"visible": true}
+            ]
+        };
+	</script>
+	{% include 'recordComponent.html' %}
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}

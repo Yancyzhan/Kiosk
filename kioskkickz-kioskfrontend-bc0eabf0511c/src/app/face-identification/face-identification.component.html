@@ -1,0 +1,9 @@
+<app-header [config]="config" #header></app-header>
+<div class="video-container" (click)="faceIdentify()">
+    <video #video id="video" hidden></video>
+    <canvas #canvas id="canvas"></canvas>
+    <canvas #resultCanvas id="resultCanvas" hidden></canvas>
+</div>
+
+
+

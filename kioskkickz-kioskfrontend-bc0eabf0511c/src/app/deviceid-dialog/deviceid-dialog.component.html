@@ -1,0 +1,18 @@
+<h1 mat-dialog-title class="result-dialog-header">Please Enter the Device ID</h1>
+<mat-dialog-content>
+<mat-form-field appearance="outline" class="w-100 mt-3">
+      <input matInput [(ngModel)]="deviceid" placeholder="Enter Device ID" [matKeyboard]="'English'">
+</mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <button mat-raised-button color="primary" (click)="save()" >Save</button>
+      </div>
+    </div>
+  </div>
+</mat-dialog-actions>
+

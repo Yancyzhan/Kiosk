@@ -1,0 +1,15 @@
+<app-header [config]="config"></app-header>
+<div class="carousel-container" (click)="start()">
+  <ngb-carousel *ngIf="images" [showNavigationArrows]="false" [showNavigationIndicators]="false">
+    <ng-template ngbSlide *ngFor="let image of images; index as i">
+      <div class="picsum-img-wrapper">
+        <img [src]="image" class="carousel-img" [alt]="'Random ' + i + ' slide'">
+      </div>
+      <div class="carousel-caption">
+        <h2>Touch Anywhere to Start</h2>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>
+
+

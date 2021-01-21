@@ -1,0 +1,34 @@
+<!-- templates/config.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if message %}
+  <div class="alert alert-success" role="alert">
+    {{message}}
+  </div>
+  {% endif %}
+  <h2>Configuration</h2>
+  <form method="POST" class="post-form">{% csrf_token %}
+    <div class="form-group">
+      {{ form.headerTitle.errors }}
+      <label for="{{ form.headerTitle.id_for_label }}">Header Title</label>
+      {{ form.headerTitle }}
+    </div>
+    <div class="form-group">
+      {{ form.useType.errors }}
+      <label for="{{ form.useType.id_for_label }}">User Type</label>
+      {{ form.useType }}
+    </div>
+    <div class="form-group">
+        {{ form.biometricSystem.errors }}
+        <label for="{{ form.biometricSystem.id_for_label }}">Biometric System</label>
+        {{ form.biometricSystem }}
+    </div>
+    <div class="form-group">
+      {{ form.maxTrialTime.errors }}
+      <label for="{{ form.maxTrialTime.id_for_label }}">Max Trial Time</label>
+      {{ form.maxTrialTime }}
+    </div>
+    <button type="submit" class="save btn btn-lg btn-primary">Save</button>
+  </form>
+{% endblock %}

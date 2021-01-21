@@ -1,0 +1,13 @@
+<mat-toolbar id="app-toolbar">
+  <div (click)="goHome()" id="title-zone" class="d-inline-flex">
+    <mat-icon id="header-icon">face</mat-icon>
+    <h1>{{title}}</h1>
+  </div>
+  <div class="ml-auto">
+    <button mat-flat-button color="accent" (click)="help()"><h2>HELP</h2></button>
+  </div>
+  <div class="ml-5">
+    <div>{{now.toDateString()}}</div>
+    <div>{{now.toLocaleTimeString()}}</div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,37 @@
+<!-- templates/config.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <script>
+  $(document).ready(function () {
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+				var recipientInputDom = document.querySelector('#message-recipient');
+        var recipient = recipientInputDom.value;
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
+        notificationSocket.send(JSON.stringify({
+          "message": message,
+					"recipient": recipient,
+					"sender": "admin"
+        }));
+
+        messageInputDom.value = '';
+				recipientInputDom.value = '';
+
+        alert("The message is sent successfully!");
+    };
+  });
+  </script>
+  <h2>Notification</h2>
+	<div class="form-group">
+		<label for="message-recipient">Recipient </label>
+		<input id="message-recipient" class="form-control" type="text" size="10"/><br/>
+  </div>
+  <div class="form-group">
+    <label for="chat-message-input">Message </label>
+    <input id="chat-message-input" class="form-control" type="text" size="100"/><br/>
+  </div>
+  <button id="chat-message-submit" type="submit" class="btn btn-primary">Send</button>
+
+{% endblock %}

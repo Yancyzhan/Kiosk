@@ -1,0 +1,49 @@
+<!-- templates/config.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_superuser %}
+  {% if message %}
+  <div class="alert alert-success" role="alert">
+    {{message}}
+  </div>
+  {% endif %}
+  <h2>Biometric System</h2>
+  <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+    <div class="form-group">
+      {{ form.name.errors }}
+      <label for="{{ form.name.id_for_label }}">Name</label>
+      {{ form.name }}
+    </div>
+    <div class="form-group">
+      {{ form.script.errors }}
+      <label for="{{ form.script.id_for_label }}">Script</label>
+      {{ form.script }}
+    </div>
+    <div class="form-group">
+      {{ form.machineLModel.errors }}
+      <label for="{{ form.machineLModel.id_for_label }}">Model</label>
+      {{ form.machineLModel }}
+    </div>
+    <div class="form-group">
+      {{ form.needName.errors }}
+      <label for="{{ form.needName.id_for_label }}">Need Name?</label>
+      {{ form.needName }}
+    </div>
+    <div class="form-group">
+      {{ form.needImage.errors }}
+      <label for="{{ form.needImage.id_for_label }}">Need Image?</label>
+      {{ form.needImage }}
+    </div>
+    <div class="form-group">
+      {{ form.portNum.errors }}
+      <label for="{{ form.portNum.id_for_label }}">Port Number</label>
+      {{ form.portNum }}
+    </div>
+    <button type="submit" class="save btn btn-lg btn-primary">Save</button>
+  </form>
+  {% else %}
+    <p>Sorry, you are not a super admin and do not have permission to access this page. </p>
+{% endif %}
+</div>
+{% endblock %}

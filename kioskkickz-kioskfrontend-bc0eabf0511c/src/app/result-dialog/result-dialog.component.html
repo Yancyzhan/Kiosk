@@ -1,0 +1,27 @@
+<h1 mat-dialog-title class="result-dialog-header">Picture Taken Successfully!</h1>
+<mat-dialog-content>
+  <div class="text-center" *ngIf="config?.needImage">
+      <img [src]="imgSrc"/>
+  </div>
+  <div *ngIf="config?.needName">
+    <mat-form-field appearance="outline" class="w-100 mt-3">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" [(ngModel)]="name" [matKeyboard]="'English'">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-hint>Please type your name here</mat-hint>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+          <button mat-raised-button color="primary" (click)="close(true)">Identify</button>
+      </div>
+      <div class="col-6">
+        <button mat-raised-button (click)="close(false)">Try Again</button>
+      </div>
+    </div>
+  </div>
+</mat-dialog-actions>
+
